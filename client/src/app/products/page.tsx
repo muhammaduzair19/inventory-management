@@ -5,6 +5,7 @@ import Header from '../(components)/header';
 import { PlusCircleIcon, SearchIcon } from 'lucide-react';
 import Rating from '../(components)/rating';
 import CreateProductModal, { ProductFormData } from './create-product-modal';
+import Image from 'next/image';
 
 const Products = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -61,7 +62,13 @@ const Products = () => {
                         products?.map((product) => (
                             <div key={product.productId} className='border shadow rounded-md p-4 max-w-full w-full mx-auto' >
                                 <div className="flex flex-col items-center">
-                                    img
+                                    <Image
+                                        src={`https://projectinventorymanagement.s3.amazonaws.com/product${Math.floor(Math.random() * 3) + 1}.png`}
+                                        alt={product.name}
+                                        width={150}
+                                        height={150}
+                                        className="rounded-2xl mb-3 w-36 h-36"
+                                    />
                                     <h3 className='font-semibold text-gray-900 text-lg'>
                                         {product.name}
                                     </h3>

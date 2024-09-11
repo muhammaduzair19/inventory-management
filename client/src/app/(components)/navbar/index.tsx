@@ -63,8 +63,8 @@ const Navbar = () => {
                     </div>
                     <hr className="w-0 h-7 mx-3 border border-gray-300 border-l border-solid" />
                     <div className="flex items-center gap-3 cursor-pointer">
-                        <div className="w-9 bg-purple-950 h-9 rounded-full text-white font-bold flex justify-center items-center">U</div>
-                        <span className="font-semibold">Uzairrr</span>
+                        <div className="w-9 bg-purple-950 h-9 rounded-full text-white font-bold flex justify-center items-center">P</div>
+                        <span className="font-semibold">Person</span>
                     </div>
                 </div>
                 <Link

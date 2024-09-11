@@ -3,6 +3,7 @@
 import { useAppDispatch, useAppSelector } from "@/app/redux";
 import { setIsSidebarCollapsed } from "@/state";
 import { Archive, CircleDollarSign, Clipboard, Layout, LucideIcon, Menu, Settings, User } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -68,7 +69,13 @@ const Sidebar = () => {
             <div
                 className={`flex justify-between gap-3 md:justify-normal items-center pt-8 ${isSidebarCollapsed ? 'px-5' : 'px-8'}`}>
                 <div>
-                    LOGO
+                    <Image
+                        src={'https://projectinventorymanagement.s3.amazonaws.com/logo.png'}
+                        alt="stock logo"
+                        width={27}
+                        height={27}
+                        className="rounded w-8"
+                    />
                 </div>
                 <h1 className={`${isSidebarCollapsed ? 'hidden' : 'block'} font-extrabold text-2xl`}>YOUSTOCK</h1>
                 <button className="md:hidden p-3 bg-gray-100 rounded-full hover:bg-blue-100"
