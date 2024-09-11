@@ -1,6 +1,7 @@
 import { ExpenseByCategorySummary, useGetDashbaordMetricsQuery } from "@/state/api";
 import { TrendingUp } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import Loader from "../(components)/loader";
 const colors = ['#00C49F', '#0088FE', 'FFBB28'];
 
 type ExpenseSums = {
@@ -33,7 +34,9 @@ const CardExpenseSummary = () => {
             className="row-span-3 bg-white shadow-md rounded-2xl flex flex-col justify-between"
         >
             {
-                isLoading ? (<div className='m-5'>Loading...</div>) :
+                isLoading ? (
+                    <Loader />
+                ) :
                     (
                         <>
                             {/* HEADER  */}

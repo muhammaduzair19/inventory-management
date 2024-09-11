@@ -4,6 +4,8 @@ import { ExpenseByCategorySummary, useGetExpensesQuery } from "@/state/api";
 import { useMemo, useState } from "react";
 import Header from "../(components)/header";
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import Loader from "../(components)/loader";
+import PageTitle from "../(components)/pagetitle";
 
 
 type AggregatedDataItem = {
@@ -51,7 +53,7 @@ const Expenses = () => {
 
 
     if (isLoading) {
-        return <div className="py-4" >Loading...</div>
+        return <Loader />
     }
     if (isError || !expensesData) {
         return <div className="text-center text-red-500 py-4" >Failed to fecth data x...</div>
@@ -65,101 +67,104 @@ const Expenses = () => {
 
 
     return (
-        <div>
+        <>
+            <PageTitle title="Expenses - Inventory Management" />
+            <div>
 
-            {/* HEADER  */}
-            <div className="mb-5">
-                <Header name="Expenses" />
-                <p className="text-sm text-gray-500">
-                    A visual representation of expeneses over the time
-                </p>
-            </div>
+                {/* HEADER  */}
+                <div className="mb-5">
+                    <Header name="Expenses" />
+                    <p className="text-sm text-gray-500">
+                        A visual representation of expeneses over the time
+                    </p>
+                </div>
 
-            {/* FILTERS  */}
-            <div className="flex flex-col md:flex-row justify-between gap-4">
-                <div className="w-full md:w-1/3 bg-white shadow rounded-lg p-6">
-                    <h3 className="text-lg font-semibold mb-4">
-                        Fiter by Category and Date
-                    </h3>
-                    <div className="space-y-4">
-                        {/* CATEGORY  */}
-                        <div>
-                            <label htmlFor="category" className={className.label}>
-                                Category
-                            </label>
-                            <select
-                                name="category"
-                                id="category"
-                                className={className.selectInput}
-                                defaultValue={'All'}
-                                onChange={(e) => setSelectedCategory(e.target.value)}
-                            >
-                                <option>All</option>
-                                <option>Office</option>
-                                <option>Professional</option>
-                                <option>Salaries</option>
+                {/* FILTERS  */}
+                <div className="flex flex-col md:flex-row justify-between gap-4">
+                    <div className="w-full md:w-1/3 bg-white shadow rounded-lg p-6">
+                        <h3 className="text-lg font-semibold mb-4">
+                            Fiter by Category and Date
+                        </h3>
+                        <div className="space-y-4">
+                            {/* CATEGORY  */}
+                            <div>
+                                <label htmlFor="category" className={className.label}>
+                                    Category
+                                </label>
+                                <select
+                                    name="category"
+                                    id="category"
+                                    className={className.selectInput}
+                                    defaultValue={'All'}
+                                    onChange={(e) => setSelectedCategory(e.target.value)}
+                                >
+                                    <option>All</option>
+                                    <option>Office</option>
+                                    <option>Professional</option>
+                                    <option>Salaries</option>
 
-                            </select>
-                        </div>
-                        {/* START DATE  */}
-                        <div>
-                            <label htmlFor="start-date" className={className.label}>
-                                Start Date
-                            </label>
-                            <input
-                                type="date"
-                                name="start-date"
-                                id="start-date"
-                                className={className.selectInput}
-                                onChange={(e) => setStartDate(e.target.value)}
-                            />
-                        </div>
-                        {/* END DATE  */}
-                        <div>
-                            <label htmlFor="end-date" className={className.label}>
-                                End Date
-                            </label>
-                            <input
-                                type="date"
-                                name="end-date"
-                                id="end-date"
-                                className={className.selectInput}
-                                onChange={(e) => setEndDate(e.target.value)}
-                            />
+                                </select>
+                            </div>
+                            {/* START DATE  */}
+                            <div>
+                                <label htmlFor="start-date" className={className.label}>
+                                    Start Date
+                                </label>
+                                <input
+                                    type="date"
+                                    name="start-date"
+                                    id="start-date"
+                                    className={className.selectInput}
+                                    onChange={(e) => setStartDate(e.target.value)}
+                                />
+                            </div>
+                            {/* END DATE  */}
+                            <div>
+                                <label htmlFor="end-date" className={className.label}>
+                                    End Date
+                                </label>
+                                <input
+                                    type="date"
+                                    name="end-date"
+                                    id="end-date"
+                                    className={className.selectInput}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                />
+                            </div>
                         </div>
                     </div>
+                    <div className=" flex-grow bg-white p-4 rounded-lg md:p-6">
+                        <ResponsiveContainer width={'100%'} height={400}>
+                            <PieChart>
+                                <Pie
+                                    data={aggregateData}
+                                    cx={'50%'}
+                                    cy={'50%'}
+                                    label
+                                    outerRadius={150}
+                                    fill="#888d48"
+                                    dataKey={'amount'}
+                                    onMouseEnter={(_, index) => setActiveIndex(index)}
+                                >
+                                    {aggregateData.map(
+                                        (entry: AggregatedDataItem, index: number) => (
+                                            <Cell
+                                                key={`cell=${index}`}
+                                                fill={index === activeIndex ? 'rgb(29,78,216)' : entry.color}
+                                            />
+                                        )
+                                    )}
+                                </Pie>
+                                <Tooltip />
+                                <Legend />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </div>
                 </div>
-                <div className=" flex-grow bg-white p-4 rounded-lg md:p-6">
-                    <ResponsiveContainer width={'100%'} height={400}>
-                        <PieChart>
-                            <Pie
-                                data={aggregateData}
-                                cx={'50%'}
-                                cy={'50%'}
-                                label
-                                outerRadius={150}
-                                fill="#888d48"
-                                dataKey={'amount'}
-                                onMouseEnter={(_, index) => setActiveIndex(index)}
-                            >
-                                {aggregateData.map(
-                                    (entry: AggregatedDataItem, index: number) => (
-                                        <Cell
-                                            key={`cell=${index}`}
-                                            fill={index === activeIndex ? 'rgb(29,78,216)' : entry.color}
-                                        />
-                                    )
-                                )}
-                            </Pie>
-                            <Tooltip />
-                            <Legend />
-                        </PieChart>
-                    </ResponsiveContainer>
-                </div>
+
+
             </div>
-
-
-        </div>
+        </>
     )
 }
 

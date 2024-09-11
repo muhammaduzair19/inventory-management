@@ -3,6 +3,7 @@ import { useGetDashbaordMetricsQuery } from '@/state/api';
 import { TrendingUp } from 'lucide-react';
 import React, { useState } from 'react';
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import Loader from '../(components)/loader';
 
 const CardSalesSummary = () => {
     const { data, isLoading, isError } = useGetDashbaordMetricsQuery();
@@ -26,16 +27,16 @@ const CardSalesSummary = () => {
     }) : 'N/A';
 
     if (isError) {
-        return <div className='m-5'>
-            Failed to fetch data...
-        </div>
+        return <Loader />
     }
 
     return (
         <div className='w-full row-span-3 xl:row-span-6 bg-white shadow-md rounded-2xl flex flex-col justify-between '>
             {
 
-                isLoading ? (<div className='m-5'>Loading...</div>) :
+                isLoading ? (
+                    <Loader />
+                ) :
                     (
                         <>
                             {/* HEADER  */}

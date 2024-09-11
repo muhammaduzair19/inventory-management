@@ -2,6 +2,7 @@ import { useGetDashbaordMetricsQuery } from '@/state/api';
 import { ShoppingBag } from 'lucide-react';
 import Rating from '../(components)/rating';
 import Image from 'next/image';
+import Loader from '../(components)/loader';
 
 const CardPopularProduct = () => {
   const { data: dashboardMetrics, isLoading } = useGetDashbaordMetricsQuery();
@@ -9,7 +10,9 @@ const CardPopularProduct = () => {
   return (
     <div className='w-full row-span-3 xl:row-span-6 bg-white shadow-md rounded-2xl pb-16'>
       {
-        isLoading ? (<div className='mt-5'> Loading....</div>) : (
+        isLoading ? (
+          <Loader />
+        ) : (
           <>
             <h3 className='text-lg font-semibold px-7 pt-5 pb-2' >
               Popular Products
@@ -24,7 +27,7 @@ const CardPopularProduct = () => {
                   >
                     <div className='flex gap-3 items-center'>
                       <Image
-                        src={`https://projectinventorymanagement.s3.amazonaws.com/product${Math.floor(Math.random()*3)+1}.png`}
+                        src={`https://projectinventorymanagement.s3.amazonaws.com/product${Math.floor(Math.random() * 3) + 1}.png`}
                         alt={product.name}
                         width={48}
                         height={48}
