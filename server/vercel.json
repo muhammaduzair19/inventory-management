@@ -9,7 +9,10 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "src/index.ts"
+            "dest": "/src/index.ts"
         }
-    ]
+    ],
+    "env": {
+        "DATABASE_URL": "@database_url"
+    }
 }
