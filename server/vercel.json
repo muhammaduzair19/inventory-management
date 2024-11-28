@@ -13,6 +13,6 @@
         }
     ],
     "env": {
-        "DATABASE_URL": "postgresql://neondb_owner:rf6QoUAC5VTN@ep-wandering-lab-a51owanc.us-east-2.aws.neon.tech/neondb?sslmode=require"
+        "DATABASE_URL": "@DATABASE_URL"
     }
 }
